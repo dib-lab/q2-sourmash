@@ -1,0 +1,3 @@
+[qiime2.plugins]
+q2-sourmash = q2_sourmash.plugin_setup:plugin
+

@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: q2-sourmash
+Version: 0+untagged.9.g92e7295.dirty
+Summary: Compute and compare minhash signatures for DNA datasets
+Home-page: https://qiime2.org
+Author: C. Titus Brown
+Author-email: contact@luizirber.org
+License: BSD-3-Clause
+Description: UNKNOWN
+Platform: UNKNOWN

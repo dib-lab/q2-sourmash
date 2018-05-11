@@ -14,15 +14,15 @@ setup(
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
-    author="Luiz Irber",
+    author="C. Titus Brown",
     author_email="contact@luizirber.org",
-    description="Compute and compare minhash signatures for DNA datasets"
+    description="Compute and compare minhash signatures for DNA datasets",
     license='BSD-3-Clause',
     url="https://qiime2.org",
     entry_points={
         'qiime2.plugins':
         ['q2-sourmash=q2_sourmash.plugin_setup:plugin']
     },
-    package_data={'q2_sourmash': ['assets/index.html', 'citations.bib']},
+    package_data={'q2_sourmash': ['citations.bib']},
     zip_safe=False,
 )

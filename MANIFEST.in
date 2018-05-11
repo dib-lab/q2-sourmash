@@ -1,2 +1,2 @@
 include versioneer.py
-include q2_emperor/_version.py
+include q2_sourmash/_version.py
