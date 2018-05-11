@@ -1,2 +1,0 @@
-q2_sourmash
-tests
