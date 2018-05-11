@@ -14,6 +14,7 @@ from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, 
 from qiime2.plugin import model
 import qiime2.util
 from q2_sourmash._compute import compute
+from q2_sourmash._compare import compare
 from q2_types.distance_matrix import DistanceMatrix
 from q2_types.sample_data import SampleData
 from q2_types.per_sample_sequences import SequencesWithQuality
@@ -48,12 +49,14 @@ plugin.methods.register_function(
         'track_abundance': qiime2.plugin.Bool},
     outputs=[('min_hash_signature', MinHashSig)],
     name = 'compute sourmash signature',
-    description = 'Computes a sourmash signature from fasta/q file.'
+    description = 'Computes a sourmash MinHash signature from fasta/q files.'
 )
 
-# plugin.methods.register_function(function=compare,
-#     inputs={'min_hash_signature':MinHashSig},
-#     parameters={'ksize': qiime2.plugin.Int,
-#     'ignore_abundance': qiime2.plugin.Bool},
-#     outputs=[('compare_output', DistanceMatrix)]
-# )
+plugin.methods.register_function(function=compare,
+    inputs={'min_hash_signature':MinHashSig},
+    parameters={'ksize': qiime2.plugin.Int,
+    'ignore_abundance': qiime2.plugin.Bool},
+    outputs=[('compare_output', DistanceMatrix)],
+    name = 'compare sourmash signatures',
+    description = 'Compares sourmash signatures and calculats Jacaard distance matrix.'
+)

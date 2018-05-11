@@ -1,0 +1,5 @@
+__pychace__/*
+__pycache__
+*.egg-info*
+*qza
+*qzv
