@@ -10,6 +10,7 @@
 import q2_sourmash
 import tempfile
 
+import qiime2.plugin
 from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, SingleFileDirectoryFormat, TextFileFormat, ValidationError
 from qiime2.plugin import model
 
@@ -36,7 +37,7 @@ class MinHashSigJson(TextFileFormat):
         pass
 
 class MinHashSigJsonDirFormat(model.DirectoryFormat):
-    signatures = model.FileCollection( 
+    signatures = model.FileCollection(
         r'.*\.sig', format=MinHashSigJson)
 
     @signature.set_path_maker
@@ -48,4 +49,23 @@ plugin.register_views(MinHashSigJson, MinHashSigJsonDirFormat)
 plugin.register_semantic_type_to_format(
     MinHashSig,
     artifact_format=MinHashSigJsonDirFormat
+)
+
+plugin.methods.register_function(
+    function=q2_sourmash.compute,
+    inputs={'SequenceFile': SampleData[SequencesWithQuality |
+                            PairedEndSequencesWithQuality]},
+    parameters={'ksizes': qiime2.plugin.Int,
+        'scaled': qiime2.plugin.Int
+        'track-abundance': qiime2.plugin.Bool,
+        'input-is-protein': qiime2.plugin.Bool},
+    output=[('min_hash_signature' : MinHashSig)])
+
+plugin.methods.register_function(function=q2_sourmash.compare,
+    inputs={'min_hash_signature':MinHashSig}
+    parameters={'ksize': qiime2.plugin.Int,
+    'ignore-abundance': qiime2.plugin.Bool,
+    'csv': qiime2.plugin.Bool},
+    outputs=
+
 )
