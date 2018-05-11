@@ -8,20 +8,14 @@
 
 
 import q2_sourmash
+import tempfile
 
-from qiime2.plugin import Plugin, Metadata, Str, List, Citations
-from q2_types.ordination import PCoAResults
-
-PARAMETERS = {'metadata': Metadata, 'custom_axes': List[Str]}
-PARAMETERS_DESC = {
-    'metadata': 'The sample metadata.',
-    'custom_axes': ('Numeric sample metadata columns that should be '
-                    'included as axes in the Emperor plot.')
-}
+from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, SingleFileDirectoryFormat, TextFileFormat, ValidationError
+from qiime2.plugin import model
 
 plugin = Plugin(
     name='sourmash',
-    version=q2_emperor.__version__,
+    version='0.0.0',
     website='http://sourmash.readthedocs.io/en/latest/',
     package='q2_sourmash',
     citations=Citations.load('citations.bib', package='q2_sourmash'),
@@ -31,28 +25,27 @@ plugin = Plugin(
     short_description='Plugin for generation of minhash signatures.'
 )
 
-plugin.visualizers.register_function(
-    function=plot,
-    inputs={'pcoa': PCoAResults},
-    parameters={'metadata': Metadata, 'custom_axes': List[Str]},
-    input_descriptions={
-        'pcoa': 'The principal coordinates matrix to be plotted.'
-    },
-    parameter_descriptions=PARAMETERS_DESC,
-    name='Visualize and Interact with Principal Coordinates Analysis Plots',
-    description='Visualize and ordination'
-)
+MinHashSig = SemanticType('MinHashSig')
 
-plugin.visualizers.register_function(
-    function=procrustes_plot,
-    inputs={'reference_pcoa': PCoAResults, 'other_pcoa': PCoAResults},
-    parameters=PARAMETERS,
-    input_descriptions={
-        'reference_pcoa': 'The reference ordination matrix to be plotted.',
-        'other_pcoa': 'The "other" ordination matrix to be plotted (the one '
-                      'that was fitted to the reference).'
-    },
-    parameter_descriptions=PARAMETERS_DESC,
-    name='Visualize and Interact with a procrustes plot',
-    description='Plot two procrustes-fitted matrices'
+plugin.register_semantic_types(MinHashSig)
+
+load_signature_json()
+
+class MinHashSigJson(TextFileFormat):
+    def _validate_(self, level):
+        pass
+
+class MinHashSigJsonDirFormat(model.DirectoryFormat):
+    signatures = model.FileCollection( 
+        r'.*\.sig', format=MinHashSigJson)
+
+    @signature.set_path_maker
+    def signature_path_maker(self, name):
+        return(name + '.sig')
+
+plugin.register_views(MinHashSigJson, MinHashSigJsonDirFormat)
+
+plugin.register_semantic_type_to_format(
+    MinHashSig,
+    artifact_format=MinHashSigJsonDirFormat
 )
