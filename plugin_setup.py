@@ -57,15 +57,14 @@ plugin.methods.register_function(
                             PairedEndSequencesWithQuality]},
     parameters={'ksizes': qiime2.plugin.Int,
         'scaled': qiime2.plugin.Int
-        'track-abundance': qiime2.plugin.Bool,
-        'input-is-protein': qiime2.plugin.Bool},
-    output=[('min_hash_signature' : MinHashSig)])
+        'track_abundance': qiime2.plugin.Bool,
+        'input_is_protein': qiime2.plugin.Bool},
+    output=[('min_hash_signature', MinHashSig)]
+)
 
 plugin.methods.register_function(function=q2_sourmash.compare,
     inputs={'min_hash_signature':MinHashSig}
     parameters={'ksize': qiime2.plugin.Int,
-    'ignore-abundance': qiime2.plugin.Bool,
-    'csv': qiime2.plugin.Bool},
-    outputs=
-
+    'ignore_abundance': qiime2.plugin.Bool},
+    outputs=[('compare_output', DistanceMatrix)]
 )
