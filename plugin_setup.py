@@ -10,12 +10,8 @@
 import q2_sourmash
 import tempfile
 
-<<<<<<< HEAD
 from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, SingleFileDirectoryFormat, TextFileFormat, ValidationError
 from qiime2.plugin import model
-=======
-from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, SingleFileDirectoryFormat, TextFileFormat
->>>>>>> 58c5556d76b2ebdf6bea05ba8bf4a02a916ab63d
 
 plugin = Plugin(
     name='sourmash',
@@ -30,7 +26,6 @@ plugin = Plugin(
 )
 
 MinHashSig = SemanticType('MinHashSig')
-<<<<<<< HEAD
 
 plugin.register_semantic_types(MinHashSig)
 
@@ -54,12 +49,3 @@ plugin.register_semantic_type_to_format(
     MinHashSig,
     artifact_format=MinHashSigJsonDirFormat
 )
-=======
-
-plugin.register_semantic_types(MinHashSig)
-
-class MinHashSigJson(TextFileFormat):
-    def
-
-__validate__
->>>>>>> 58c5556d76b2ebdf6bea05ba8bf4a02a916ab63d
