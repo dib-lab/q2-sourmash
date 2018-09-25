@@ -16,7 +16,7 @@ setup(
     packages=find_packages(),
     author="C. Titus Brown",
     author_email="contact@luizirber.org",
-    description="Compute and compare minhash signatures for DNA datasets",
+    description="Compute and compare minhash signatures for DNA datasets using sourmash",
     license='BSD-3-Clause',
     url="https://qiime2.org",
     entry_points={
