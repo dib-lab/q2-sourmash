@@ -19,3 +19,7 @@ class MinHashSigJsonDirFormat(model.DirectoryFormat):
     @signatures.set_path_maker
     def signature_path_maker(self, name):
         return(name + '.sig')
+
+class SequenceBloomTree(model.TextFileFormat):
+    def _validate_(self, level):
+        pass #Fill in with some sort of json test?

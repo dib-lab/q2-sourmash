@@ -1,4 +1,5 @@
-*__pychace__*
+*__pycache__*
 *.egg-info*
 *qza
 *qzv
+qiime2-latest-py35-linux-conda.yml
