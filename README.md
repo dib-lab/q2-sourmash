@@ -2,12 +2,11 @@
 
 This is a QIIME 2 plugin. For details on QIIME 2, see https://qiime2.org. For details on sourmash, see http://sourmash.readthedocs.io/. 
 
-# q2-sourmash
+## Installing the QIIME 2 sourmash plugin 
 
-## Installation 
 q2-sourmash is a QIIME 2 plugin for sourmash, a tool computing and comparing MinHash signatures for nucleotide sequences fast and effieciently. You can find out more about sourmash by reading the paper [(Brown and Irber, JOSS 2018)](http://joss.theoj.org/papers/10.21105/joss.00027) or checking out the [sourmash documentation](https://sourmash.readthedocs.io/en/latest/). 
 
-You need to have QIIME 2 version 2018.4 or later. Also, regardless of which way you install, you need to be in a QIIME 2 environment for this to work. [Install QIIME 2](https://docs.qiime2.org/2018.8/install/) and activate the QIIME 2 virtual environment (e.g. `source activate qiime2-2018.8`), and then install sourmash by run:
+You need to have QIIME 2 version 2018.4 or later. Also, regardless of which way you install, you need to be in a QIIME 2 environment for this to work. [Install QIIME 2](https://docs.qiime2.org/2018.8/install/) and activate the QIIME 2 virtual environment (e.g. `source activate qiime2-2018.8`), and then install sourmash by running:
 
 `conda install sourmash`
 
@@ -18,11 +17,13 @@ git clone https://github.com/dib-lab/q2-sourmash.git
 cd q2-sourmash
 python setup.py install
 ```
+
 To check that the installation worked, type `qiime` on the command line. The sourmash plugin should show up in the list of available plugins.
 
-## Using the Qiime2 sourmash plugin
+## Using the QIIME2 sourmash plugin
 
 Currently there are two main methods for use in the Qiime2 sourmash plugin: `compute` to calcualte MinHash signatures from nucleotide sequences and `compare` to calculate a Jaccard distance between samples. 
+
 ### Computing signatures
 
 The `compute` calcuates the minhash signatures for a given set of nucleotide sequences. To run, one must simply supply a `.qza` archive (directory) containing sequence file ending with 'fastq.gz'.
