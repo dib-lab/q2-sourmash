@@ -8,14 +8,12 @@ q2-sourmash is a QIIME 2 plugin for sourmash, a tool computing and comparing Min
 
 You need to have QIIME 2 version 2018.4 or later. Also, regardless of which way you install, you need to be in a QIIME 2 environment for this to work. [Install QIIME 2](https://docs.qiime2.org/2018.8/install/) and activate the QIIME 2 virtual environment (e.g. `source activate qiime2-2018.8`), and then install sourmash by running:
 
-`conda install sourmash`
+`conda install -c bioconda sourmash`
 
-To install the plugin, clone the repo to your computer, move into the `q2-sourmash` directory, and run:
+To install the plugin, run the following command:
 
 ```
-git clone https://github.com/dib-lab/q2-sourmash.git
-cd q2-sourmash
-python setup.py install
+pip install https://github.com/dib-lab/q2-sourmash/archive/master.zip
 ```
 
 To check that the installation worked, type `qiime` on the command line. The sourmash plugin should show up in the list of available plugins.
@@ -37,7 +35,7 @@ wget -c -nc https://data.qiime2.org/2018.8/tutorials/moving-pictures/sample_meta
 
 To calculate sourmash signatures for all sequence files within the archive use the following:
 
-`qiime sourmash compute --i-sequence-file demux.qza --p-ksizes 21 --p-scaled 10000 --o-min-hash-signature sigs`
+`qiime sourmash compute --i-sequence-file demux.qza --p-ksizes 21 --p-scaled 10000 --o-min-hash-signature sigs.qza`
 
 The following flags are required: 
 
@@ -49,7 +47,7 @@ The following flags are required:
 The output archive, in this case `sigs.qza`, contains the signature files for each of the fastq.gz files that were input. They can be viewed using the [qiime online viewer](https://view.qiime2.org/) or by unzipping the qza file. 
 
 ```
-unzip sigs.qza
+qiime tools export --input-path sigs.qza --output-path sigs
 ```
 
 ### Comparing signatures
@@ -57,11 +55,12 @@ unzip sigs.qza
 Signatures that have been calculated as above can then be compared using `sourmash compare`. This will calculate a pair-wise Jaccard distance between each of the samples included in the provided qza archive: 
 
 ```
-qiime sourmash compare --i-min-hash-signature sigs.qza --p-ksize 21 --o-compare-output compare.mat
+qiime sourmash compare --i-min-hash-signature sigs.qza --p-ksize 21 --o-compare-output compare.mat.qza
 ```
 
-The output, `compare.mat.qza`, can then be investigated as above by unzipping the qza archive or can be pushed through subsequent analyses (e.g. calculate diversity metrics such as PCoA):
+The output, `compare.mat.qza`, can then be investigated as above by unzipping the qza archive or can be pushed through subsequent analyses (e.g. generate a PCoA plot):
 ```
 qiime diversity pcoa --i-distance-matrix compare.mat.qza  --o-pcoa pcoa.compare.mat.qza
+qiime emperor plot --i-pcoa pcoa.compare.mat.qza --o-visualization emperor.qzv --m-metadata-file sample_metadata.tsv
 ```
 
