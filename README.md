@@ -20,7 +20,7 @@ To check that the installation worked, type `qiime` on the command line. The sou
 
 ## Using the QIIME2 sourmash plugin
 
-Currently there are two main methods for use in the Qiime2 sourmash plugin: `compute` to calcualte MinHash signatures from nucleotide sequences and `compare` to calculate a Jaccard distance between samples. 
+Currently there are two main methods for use in the QIIME 2 sourmash plugin: `compute` to calcualte MinHash signatures from nucleotide sequences and `compare` to calculate a Jaccard distance between samples. 
 
 ### Computing signatures
 
