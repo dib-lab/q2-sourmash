@@ -26,7 +26,7 @@ def compare(min_hash_signature:MinHashSigJsonDirFormat, ksize: int, ignore_abund
     # convert similarity to distance
     np_dis = 1 - np_sim
     # read labels into a list -> labels
-    labels = [item.strip() for item in open(label_file)]
+    labels = [os.path.basename(filename).strip().strip('.fastq.gz') for filename in open(label_file)]
     os.remove(np_file)
     os.remove(label_file)
     return skbio.DistanceMatrix(np_dis, labels)
