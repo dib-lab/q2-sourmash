@@ -7,13 +7,13 @@
 # ----------------------------------------------------------------------------
 
 from q2_types.distance_matrix import DistanceMatrix
-from q2_sourmash._format import MinHashSigJsonDirFormat
+from q2_sourmash._format import MinHashSigDirFmt
 import os
 import subprocess
 import numpy
 import skbio
 
-def compare(min_hash_signature:MinHashSigJsonDirFormat, ksize: int, ignore_abundance: bool=True) -> skbio.DistanceMatrix:
+def compare(min_hash_signature:MinHashSigDirFmt, ksize: int, ignore_abundance: bool=True) -> skbio.DistanceMatrix:
 
     np_file = 'tmp'
     label_file = 'tmp.labels.txt'
@@ -25,8 +25,10 @@ def compare(min_hash_signature:MinHashSigJsonDirFormat, ksize: int, ignore_abund
     np_sim = numpy.load(np_file)
     # convert similarity to distance
     np_dis = 1 - np_sim
-    # read labels into a list -> labels
-    labels = [item.strip() for item in open(label_file)]
+    # read labels into a list -> labels; 
+    # only take first part of file name as label following qiime convention; 
+    # L1S105_9_L001_R1_001.fastq.gz  ==> L1S105
+    labels = [item.strip().split('_',1)[0] for item in open(label_file)]
     os.remove(np_file)
     os.remove(label_file)
     return skbio.DistanceMatrix(np_dis, labels)

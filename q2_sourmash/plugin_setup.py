@@ -18,14 +18,14 @@ from qiime2.plugin import model
 import qiime2.util
 from q2_sourmash._compute import compute
 from q2_sourmash._compare import compare
+from q2_sourmash._search import search
 from q2_types.distance_matrix import DistanceMatrix
 from q2_types.sample_data import SampleData
 from q2_types.per_sample_sequences import SequencesWithQuality
 from ._format import (
-        MinHashSigJsonDirFormat, MinHashSigJson, 
-        SequenceBloomTree)
-from ._types import MinHashSig
-from type import Union
+        MinHashSigDirFmt, MinHashSigFmt, 
+        SBTFmt, SBTDirFmt, OutputTextFmt, OutputTextDirFmt)
+from ._types import MinHashSig, SBT, OutputText
 
 plugin = Plugin(
     name='sourmash',
@@ -42,25 +42,28 @@ plugin = Plugin(
 
 plugin.register_semantic_type_to_format(
     MinHashSig,
-    artifact_format=MinHashSigJson
-)
-
-plugin.register_semantic_type_to_format(
-    MinHashSigDir,
-    artifact_format=MinHashSigJsonDirFormat
+    artifact_format=MinHashSigDirFmt
 )
 
 plugin.register_semantic_type_to_format(
     SBT,
-    artifact_format=SequenceBloomTree
+    artifact_format=SBTDirFmt
+)
+
+plugin.register_semantic_type_to_format(
+    OutputText,
+    artifact_format=OutputTextDirFmt
 )
 
 plugin.register_views(
-    MinHashSigJson, 
-    MinHashSigJsonDirFormat, 
-    SequenceBloomTree)
+    MinHashSigFmt, 
+    MinHashSigDirFmt, 
+    SBTFmt,
+    SBTDirFmt,
+    OutputTextFmt,
+    OutputTextDirFmt)
 
-plugin.register_semantic_types(MinHashSig, MinHashSigDir, SBT)
+plugin.register_semantic_types(MinHashSig, SBT, OutputText)
 
 plugin.methods.register_function(
     function=compute,
@@ -70,7 +73,7 @@ plugin.methods.register_function(
         'scaled': qiime2.plugin.Int,
         'track_abundance': qiime2.plugin.Bool
     },
-    outputs=[('min_hash_signature', MinHashSigDir)],
+    outputs=[('min_hash_signature', MinHashSig)],
     name = 'sourmash compute',
     description = (
         'Computes a sourmash MinHash signature from fasta/q files.'
@@ -79,7 +82,7 @@ plugin.methods.register_function(
 
 plugin.methods.register_function(
     function=compare,
-    inputs={'min_hash_signature':MinHashSigDir},
+    inputs={'min_hash_signature':MinHashSig},
     parameters={
         'ksize': qiime2.plugin.Int,
         'ignore_abundance': qiime2.plugin.Bool
@@ -95,19 +98,18 @@ plugin.methods.register_function(
 plugin.methods.register_function(
     function=search,
     inputs={
-        'query_signature':MinHashSig, 
-        'db_signature':Union(MinHashSigDir, SBT)
+        'query_signature': MinHashSig, 
+        'db_signature': MinHashSig|SBT
     },
 
     parameters={
-        'output': qiime2.plugin.TextFileFormat,
         'ksize': qiime2.plugin.Int,
         'threshold': qiime2.plugin.Float,
         'scale': qiime2.plugin.Int,
         'containment': qiime2.plugin.Bool
     },
-    outputs=[('search_output', qiime2.plugin.TextFileFormat)],
-    name = 'sourmash search'
+    outputs=[('search_output', OutputText)],
+    name = 'sourmash search',
     description = (
         'Search signatures in a directory of sigs or'
         'sequence bloom tree'

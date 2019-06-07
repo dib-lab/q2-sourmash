@@ -8,18 +8,40 @@
 
 import qiime2.plugin.model as model
 
-class MinHashSigJson(model.TextFileFormat):
+class MinHashSigFmt(model.TextFileFormat):
     def _validate_(self, level):
         pass #Fill in with some sort of json test?
 
-class MinHashSigJsonDirFormat(model.DirectoryFormat):
+class MinHashSigDirFmt(model.DirectoryFormat):
     signatures = model.FileCollection(
-        r'.*\.sig', format=MinHashSigJson)
+        r'.*\.sig', format=MinHashSigFmt)
 
     @signatures.set_path_maker
     def signature_path_maker(self, name):
         return(name + '.sig')
 
-class SequenceBloomTree(model.TextFileFormat):
+SingleMinHashSigDirFmt = model.SingleFileDirectoryFormat(
+    'SingleMinHashSigDirFmt',
+    'minhash.sig',
+    MinHashSigFmt
+)
+
+class SBTFmt(model.TextFileFormat):
     def _validate_(self, level):
-        pass #Fill in with some sort of json test?
+        pass #Fill in with some sort of sbt test?
+
+SBTDirFmt = model.SingleFileDirectoryFormat(
+    'SBTDirFmt', 
+    'minhashsig.stb.json', 
+    SBTFmt
+)
+
+class OutputTextFmt(model.TextFileFormat):
+    def _validate_(self, level):
+        pass
+
+OutputTextDirFmt = model.SingleFileDirectoryFormat(
+    'OutputTextDirFmt',
+    'output.txt',
+    OutputTextFmt
+)

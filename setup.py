@@ -11,7 +11,7 @@ import versioneer
 
 setup(
     name="q2-sourmash",
-    version=versioneer.get_version(),
+    #version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     author="C. Titus Brown",

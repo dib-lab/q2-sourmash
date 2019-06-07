@@ -5,4 +5,4 @@ qiime sourmash compute --i-sequence-file demux.qza --p-ksizes 21 --p-scaled 1000
 qiime sourmash compare --i-min-hash-signature sigs.qza --p-ksize 21 --o-compare-output compare.mat || { echo "compare fail"; rm sigs.qza; exit 1; }
 
 echo "tests passed"
-rm -f sigs.qza compare.mat.qza demux.qza
+#rm -f sigs.qza compare.mat.qza demux.qza

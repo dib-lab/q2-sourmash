@@ -8,14 +8,14 @@
 
 from q2_types.per_sample_sequences import SingleLanePerSampleSingleEndFastqDirFmt, FastqGzFormat
 import qiime2.util
-from q2_sourmash._format import MinHashSigJsonDirFormat
+from q2_sourmash._format import MinHashSigDirFmt
 import os
 import subprocess
 import glob
 
-def compute(sequence_file:SingleLanePerSampleSingleEndFastqDirFmt, ksizes: int, scaled: int, track_abundance: bool=True) -> MinHashSigJsonDirFormat:
+def compute(sequence_file:SingleLanePerSampleSingleEndFastqDirFmt, ksizes: int, scaled: int, track_abundance: bool=True) -> MinHashSigDirFmt:
 
-    output = MinHashSigJsonDirFormat()
+    output = MinHashSigDirFmt()
     for seq_file in glob.glob(os.path.join(str(sequence_file), '*fastq.gz')):
         filepath = str(seq_file)
         filename = os.path.basename(filepath)
