@@ -45,3 +45,13 @@ OutputTextDirFmt = model.SingleFileDirectoryFormat(
     'output.txt',
     OutputTextFmt
 )
+
+class GenericSequenceFileFmt(model.TextFileFormat):
+    def _validate_(self, level):
+        pass
+
+GenericSequenceFileDirFmt = model.SingleFileDirectoryFormat(
+    'GenericSequenceFileDirFmt',
+    'sequences',
+    GenericSequenceFileFmt
+)

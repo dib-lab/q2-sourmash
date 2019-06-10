@@ -24,8 +24,11 @@ from q2_types.sample_data import SampleData
 from q2_types.per_sample_sequences import SequencesWithQuality
 from ._format import (
         MinHashSigDirFmt, MinHashSigFmt, 
-        SBTFmt, SBTDirFmt, OutputTextFmt, OutputTextDirFmt)
-from ._types import MinHashSig, SBT, OutputText
+        SBTFmt, SBTDirFmt, 
+        OutputTextFmt, OutputTextDirFmt,
+        GenericSequenceFileFmt, GenericSequenceFileDirFmt
+)
+from ._types import MinHashSig, SBT, OutputText, GenericSequenceFile
 
 plugin = Plugin(
     name='sourmash',
@@ -55,23 +58,32 @@ plugin.register_semantic_type_to_format(
     artifact_format=OutputTextDirFmt
 )
 
+plugin.register_semantic_type_to_format(
+    GenericSequenceFile,
+    artifact_format=GenericSequenceFileDirFmt
+)
+
 plugin.register_views(
     MinHashSigFmt, 
     MinHashSigDirFmt, 
     SBTFmt,
     SBTDirFmt,
     OutputTextFmt,
-    OutputTextDirFmt)
+    OutputTextDirFmt,
+    GenericSequenceFileFmt,
+    GenericSequenceFileDirFmt
+)
 
-plugin.register_semantic_types(MinHashSig, SBT, OutputText)
+plugin.register_semantic_types(MinHashSig, SBT, OutputText, GenericSequenceFile)
 
 plugin.methods.register_function(
     function=compute,
-    inputs={'sequence_file': SampleData[SequencesWithQuality]},
+    inputs={'sequence_file': GenericSequenceFile},
     parameters={
         'ksizes': qiime2.plugin.Int,
         'scaled': qiime2.plugin.Int,
-        'track_abundance': qiime2.plugin.Bool
+        'track_abundance': qiime2.plugin.Bool,
+        'metadata': qiime2.plugin.Str
     },
     outputs=[('min_hash_signature', MinHashSig)],
     name = 'sourmash compute',
