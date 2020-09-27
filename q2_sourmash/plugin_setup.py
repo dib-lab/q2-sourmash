@@ -13,10 +13,11 @@ import qiime2.plugin
 from qiime2.plugin import Plugin, Metadata, Str, List, Citations, SemanticType, TextFileFormat, ValidationError
 from qiime2.plugin import model
 import qiime2.util
-from q2_sourmash._compute import compute
+from q2_sourmash._compute import compute, compute_fasta
 from q2_sourmash._compare import compare
 from q2_types.distance_matrix import DistanceMatrix
 from q2_types.sample_data import SampleData
+from q2_types.feature_data import FeatureData, Sequence
 from q2_types.per_sample_sequences import SequencesWithQuality
 from ._format import MinHashSigJsonDirFormat, MinHashSigJson
 from ._types import MinHashSig
@@ -40,6 +41,17 @@ plugin.register_semantic_type_to_format(
 )
 plugin.register_views(MinHashSigJson, MinHashSigJsonDirFormat)
 plugin.register_semantic_types(MinHashSig)
+
+plugin.methods.register_function(
+    function=compute_fasta,
+    inputs={'sequence_file': FeatureData[Sequence]},
+    parameters={'ksizes': qiime2.plugin.Int,
+        'scaled': qiime2.plugin.Int,
+        'track_abundance': qiime2.plugin.Bool},
+    outputs=[('min_hash_signature', MinHashSig)],
+    name = 'compute sourmash signature',
+    description = 'Computes a sourmash MinHash signature from genome fasta files.'
+)
 
 plugin.methods.register_function(
     function=compute,
