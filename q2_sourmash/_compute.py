@@ -13,7 +13,9 @@ from typing import Union
 
 import pandas as pd
 import qiime2.util
-from q2_types.per_sample_sequences import SingleLanePerSampleSingleEndFastqDirFmt
+from q2_types.per_sample_sequences import (
+    SingleLanePerSampleSingleEndFastqDirFmt
+)
 from q2_types_genomics.per_sample_data import MultiMAGSequencesDirFmt
 
 from q2_sourmash._format import MinHashSigJsonDirFormat
@@ -22,7 +24,7 @@ from q2_sourmash._format import MinHashSigJsonDirFormat
 def _duplicate_mag_seqs(manifest, sequence_file):
     output = MinHashSigJsonDirFormat()
     for i, row in manifest.iterrows():
-        sample_id, bin_id, src_fp = row["sample-id"], row["mag-id"], row["filename"]
+        _, bin_id, src_fp = row["sample-id"], row["mag-id"], row["filename"]
         src_fp = os.path.join(str(sequence_file), src_fp)
         dest_fp = os.path.join(str(output), f'{bin_id}.fasta')
         qiime2.util.duplicate(src_fp, dest_fp)
@@ -34,7 +36,9 @@ def _duplicate_seqs(manifest, sequence_file):
     for seq_file in glob.glob(os.path.join(str(sequence_file), '*.fastq.gz')):
         src_fp = str(seq_file)
         filename = os.path.basename(src_fp)
-        sample_id = list(manifest[manifest['filename'] == filename]['sample-id'])
+        sample_id = list(
+            manifest[manifest['filename'] == filename]['sample-id']
+        )
         dest_fp = os.path.join(str(output), f'{sample_id[0]}.fastq.gz')
         qiime2.util.duplicate(src_fp, dest_fp)
     return output

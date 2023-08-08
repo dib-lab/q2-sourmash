@@ -59,5 +59,6 @@ plugin.methods.register_function(
     },
     outputs=[('compare_output', DistanceMatrix)],
     name='Compare sourmash signatures',
-    description='Compares sourmash signatures and calculats Jacaard distance matrix.'
+    description='Compares sourmash signatures and '
+                'calculates Jacaard distance matrix.'
 )
