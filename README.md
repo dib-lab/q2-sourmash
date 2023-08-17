@@ -10,6 +10,13 @@ You need to have QIIME 2 version 2018.4 or later. Also, regardless of which way 
 
 `conda install -c bioconda sourmash`
 
+You will also need to install q2-types-genomics (unless your environment already has it):
+
+```
+conda install -c conda-forge -c bioconda -c https://packages.qiime2.org/qiime2/2023.5/tested -c defaults \
+    q2-types-genomics
+```
+
 To install the plugin, run the following command:
 
 ```
