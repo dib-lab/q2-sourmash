@@ -14,9 +14,9 @@ from typing import Union
 import pandas as pd
 import qiime2.util
 from q2_types.per_sample_sequences import (
-    SingleLanePerSampleSingleEndFastqDirFmt
+    SingleLanePerSampleSingleEndFastqDirFmt,
+    MultiMAGSequencesDirFmt
 )
-from q2_types_genomics.per_sample_data import MultiMAGSequencesDirFmt
 
 from q2_sourmash._format import MinHashSigJsonDirFormat
 

@@ -9,7 +9,7 @@ import qiime2.util
 from q2_types.distance_matrix import DistanceMatrix
 from q2_types.per_sample_sequences import SequencesWithQuality
 from q2_types.sample_data import SampleData
-from q2_types_genomics.per_sample_data import MAGs
+from q2_types.per_sample_sequences import MAGs
 from qiime2.plugin import Plugin, Citations
 
 from q2_sourmash._compare import compare
