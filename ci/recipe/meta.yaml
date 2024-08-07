@@ -14,11 +14,11 @@ build:
 
 requirements:
   build:
-    - python >=3.5*
+    - python {{ python }}
     - setuptools
 
   run:
-    - python >=3.5*
+    - python {{ python }}
     - setuptools
     - numpy
     - pandas
