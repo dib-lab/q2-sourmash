@@ -27,6 +27,7 @@ requirements:
     - sphinx
     - alabaster
     - recommonmark
+    - sourmash-minimal
     - sphinxcontrib-napoleon
 
 
