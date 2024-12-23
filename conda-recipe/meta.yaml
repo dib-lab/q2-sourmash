@@ -7,7 +7,7 @@ package:
   version: {{ version }}
 
 source:
-  path: ../..
+  path: ..
 
 build:
   script: make install
